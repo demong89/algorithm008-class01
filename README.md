@@ -66,4 +66,12 @@ type: 用于说明 commit 的类型。一般有以下几种:
 scope: 用于说明 commit 影响的范围，比如: views, component, utils, test...
 subject: commit 目的的简短描述
 #### Body
+对本次 commit 修改内容的具体描述, 可以分为多行。如下图:
+```
+# body: 72-character wrapped. This should answer:
+# * Why was this change necessary?
+# * How does it address the problem?
+# * Are there any side effects?
+# initial commit
+```
 #### Footer
