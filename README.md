@@ -74,4 +74,16 @@ subject: commit 目的的简短描述
 # * Are there any side effects?
 # initial commit
 ```
-#### Footer   
+#### Footer
+
+
+
+
+# 安装
+npm i -g gitmoji-cli
+# 使用
+git commit -m ':bug: 问题fix'
+
+
+[gitmoji项目地址](https://github.com/carloscuesta/gitmoji/)
+[gitmoji使用示例](https://gitmoji.carloscuesta.me/)
