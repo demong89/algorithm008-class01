@@ -63,6 +63,9 @@ type: 用于说明 commit 的类型。一般有以下几种:
     chore: 改变构建流程、或者增加依赖库、工具等。
     revert: 版本回滚
 ```
+
+[build, chore, ci, docs, feat, fix, improvement, perf, refactor, revert, style, test] 
+
 scope: 用于说明 commit 影响的范围，比如: views, component, utils, test...
 subject: commit 目的的简短描述
 #### Body
@@ -77,9 +80,34 @@ subject: commit 目的的简短描述
 #### Footer
 
 
+commitlint
+
+commitlint是一个提交验证工具。原理是可以在实际的 git commit 提交到远程仓库之前使用 git 钩子来验证信息。提交不符合规则的信息将会被阻止提交到远程仓库。
+https://commitlint.js.org/#/guides-local-setup 
+首先安装 commitlint 以及 conventional 规范:
+npm install --save-dev @commitlint/cli @commitlint/config-conventional
+接着在 package.json 中配置 commitlint 脚本:
+"commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+当然如果你想单独对 commitlint 进行配置的话，需要建立校验文件 commitlint.config.js，不然会校验失败
+为了可以在每次 commit 时执行 commitlint 来 检查我们输入的 message，我们还需要用到一个工具 —— husky。
+husky 是一个增强的 git hook 工具。可以在 git hook 的各个阶段执行我们在 package.json 中配置好的 npm script。
+首先安装 husky:
+npm install --save-dev husky
+接着在 package.json 中配置 commitmsg 脚本:
+"husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+ },
+到这里，commitlint就配置完成了～
 
 
 # 安装
+(安装就能用)
 npm i -g gitmoji-cli
 # 使用
 git commit -m ':bug: 问题fix'
@@ -87,3 +115,5 @@ git commit -m ':bug: 问题fix'
 
 [gitmoji项目地址](https://github.com/carloscuesta/gitmoji/)
 [gitmoji使用示例](https://gitmoji.carloscuesta.me/)    
+
+[参考](https://mp.weixin.qq.com/s/8oWsj_ipp73crD_vg58LeQ)
