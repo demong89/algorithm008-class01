@@ -62,9 +62,12 @@ type: 用于说明 commit 的类型。一般有以下几种:
     test: 测试用例，包括单元测试、集成测试。
     chore: 改变构建流程、或者增加依赖库、工具等。
     revert: 版本回滚
+    build:构建系统或者包依赖更新（eg: gulp、npm、broccoli）
+    ci: CL配置，脚本文件等更新（eg：Travis持续集成服务）
+    improvement: 对现有功能的改进
 ```
 
-[build, chore, ci, docs, feat, fix, improvement, perf, refactor, revert, style, test] 
+
 
 scope: 用于说明 commit 影响的范围，比如: views, component, utils, test...
 subject: commit 目的的简短描述
