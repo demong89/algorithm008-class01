@@ -563,12 +563,169 @@ var twoSum = function(nums, target) {
 };
 ```
 
-## 5、树、二叉树、二叉搜索树
+## 5、树、二叉树、二叉搜索树 
+#### 5.1 [94.二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/description/)
+```
+var inorderTraversal = function(root,res=[]) {
+    if(root===null) return res;
+    inorderTraversal(root.left,res)
+    res.push(root.val)
+    inorderTraversal(root.right,res)
+    return res
+};
+```
+#### 5.2 [144.二叉树的前序遍历](https://leetcode-cn.com/problems/binary-tree-preorder-traversal/description/)
+```
+var preorderTraversal = function(root,arr=[]) {
+    if(root==null) return arr;
+    arr.push(root.val)
+    preorderTraversal(root.left,arr)
+    preorderTraversal(root.right,arr)
+    return arr
+ };
+ // var preorderTraversal = function(root) {
+ //   let result = [];
+ //   let stack = [];
+ //   let cur = root;
+ //   while (cur||stack.length>0) {
+ //       while (cur) {
+ //           result.push(cur.val)
+ //           stack.push(cur)
+ //           cur = cur.left
+ //       }
+ //       cur = stack.pop();
+ //       cur = cur.right;
+ //   }
+ //     return result
+ // };
+```
+#### 5.3 [590.N叉树的后序遍历](https://leetcode-cn.com/problems/n-ary-tree-postorder-traversal/description/)
+```
+var postorder = function(root,arr=[]) {
+   if (root == null) return arr;
+   for (let i = 0; i < root.children.length; i++) {
+       postorder(root.children[i],arr)
+   }
+   arr.push(root.val)
+   return arr
+};
+```
+#### 5.4 [589.N叉树的前序遍历](https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/description/)
+```
+var preorder = function(root,arr=[]) { //迭代
+    if(root==null) return arr;
+    arr.push(root.val)
+    for (let i = 0; i < root.children.length; i++) {
+        preorder(root.children[i],arr)
+    }
+    return arr
+    // if(!root) return []
+    // let res = [],arr =[root]
+    // while (arr.length) {
+    //     let current = arr.pop();
+    //     res.push(current.val)
+    //     for (let i = current.children.length-1; i >=0; i--) {
+    //        arr.push(current.children[i])
+    //     }
+    // }
+    // return res;
+};
+```
+#### 5.5 [429. N叉树的层序遍历](https://leetcode-cn.com/problems/n-ary-tree-level-order-traversal/description/)
+```
+var levelOrder = function(root) {
+    let nums = [];
+    search(nums,root,0)
+    return nums;
+};
 
+function search(nums,root,k){
+    if (root==null) return ;
+    if (nums[k] === undefined) {
+        nums[k] = []
+    }
+    nums[k].push(root.val)
+    for (let i = 0; i < root.children.length; i++) {
+       search(nums,root.children[i],k+1)
+    }
+}
+```
+
+#### 5.6 [105 从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/)
+```
+var buildTree = function(preorder, inorder) {
+    if (!inorder.length) return null;
+    let tmp = preorder[0],mid = inorder.indexOf(tmp)
+    let root = new TreeNode(tmp)
+    root.left = buildTree(preorder.slice(1,mid+1),inorder.slice(0,mid))
+    root.right = buildTree(preorder.slice(mid+1),inorder.slice(mid+1))
+    return root
+};
+```
 
 ## 6、堆、二叉堆、图
+#### 6.1 [面试题40. 最小的k个数](https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/)
+    ```
+    var getLeastNumbers = function(arr, k) {
+    let len = arr.length
+    if (!len || !k) return []
+    let heap = new Heap()
+    // 建立最小堆，O(N) 复杂度
+    heap.init(arr)
+    let res = []
+    while (k) {
+        // 依次从堆顶弹出最小元素，O(logN) 复杂度
+        res.push(heap.delete())
+        k--
+    }
+    return res
+    }
 
+    function Heap() {
+    this.heap = [-Infinity]
+    }
+    Heap.prototype.init = function(arr) {
+    this.heap = [-Infinity]
+    this.heap.push(...arr)
+    let size = arr.length
+    // 从最后一个元素的父节点开始实现最小堆，类似删除操作中将最后一个元素放在堆顶进行调整。
+    for (let pos = parseInt(size / 2); pos > 0; pos--) {
+        let tmp = this.heap[pos]
+        let parent, child
+        for (parent = pos; parent * 2 <= size; parent = child) {
+        child = parent * 2
+        if (child + 1 <= size && this.heap[child + 1] < this.heap[child]) child++
+        if (tmp < this.heap[child]) break
+        else this.heap[parent] = this.heap[child]
+        }
+        this.heap[parent] = tmp
+    }
+    }
+    Heap.prototype.delete = function() {
+    let size = this.heap.length - 1
+    let res = this.heap[1]
+    // 拿到最后一个元素
+    let tmp = this.heap[size]
+    this.heap.length--
+    size--
+    // 将最后一个元素放在堆顶，并调整最小堆
+    let parent, child
+    for (parent = 1; parent * 2 <= size; parent = child) {
+        child = parent * 2
+        if (child + 1 <= size && this.heap[child + 1] < this.heap[child]) child++
+        if (tmp < this.heap[child]) break
+        else this.heap[parent] = this.heap[child]
+    }
+    this.heap[parent] = tmp
+    return res
+    }
+
+    ```
 ## 7、泛型递归、树的递归
+
 ## 8、分治、回溯
 ## 9、深度优先、广度优先
 ## 10、贪心算法、二分查找
+
+
+
