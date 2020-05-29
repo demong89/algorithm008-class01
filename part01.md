@@ -721,10 +721,644 @@ var buildTree = function(preorder, inorder) {
     }
 
     ```
+#### 6.2 [前 K 个高频元素](https://leetcode-cn.com/problems/top-k-frequent-elements/)
+#### 6.3 [239. 滑动窗口最大值](https://leetcode-cn.com/problems/sliding-window-maximum/)
+#### 6.4 [面试题49. 丑数](https://leetcode-cn.com/problems/chou-shu-lcof/)
+```
+var nthUglyNumber = function(n) {
+    let p2 = p3 = p5 = 0;
+    let uglyArr = [];
+    uglyArr[0] = 1;
+    for(let i = 1; i<n;i++){
+        let nextP2 = uglyArr[p2]*2;
+        let nextP3 = uglyArr[p3]*3;
+        let nextP5 = uglyArr[p5]*5;
+        let nextUgly = Math.min(nextP2,nextP3,nextP5)
+        uglyArr.push(nextUgly)
+        if(nextUgly === nextP2) p2++;
+        if(nextUgly === nextP3) p3++;
+        if(nextUgly === nextP5) p5++;
+    }
+    return uglyArr[n-1]
+};
+```
+#### 6.5 图 [200. 岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)
+```
+var numIslands = function(grid) {
+    let num =0;
+    if (grid&&grid.length) {
+     const maxI = grid.length-1,maxJ=grid[0].length-1;
+     function overturn(i,j) {
+         if (i<0||j<0||i>maxI||j>maxJ) return;
+         if (grid[i][j]==='1') {
+             grid[i][j] = '0';
+             overturn(i,j-1)
+             overturn(i-1,j)
+             overturn(i+1,j)
+             overturn(i,j+1)
+         }
+     }
+     for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[i].length; j++) {
+            if (grid[i][j]==='1') {
+                num++;
+                overturn(i,j)
+            }
+            
+        }
+         
+     }   
+    }
+    return num;
+};
+```
+
+
 ## 7、泛型递归、树的递归
+#### 7.1 [70. 爬楼梯](https://leetcode-cn.com/problems/climbing-stairs/)
+```
+var climbStairs = function(n) {
+    // if (n==0) return 0;
+    // if(n==1) return 1
+    // if(n==2) return 2
+    // return climbStairs(n-1)+climbStairs(n-2)
+
+    let step = [];
+    step[0] = 1;
+    step[1] = 1;
+    for (let i = 2; i <= n; i++) {
+        step[i] = step[i-1]+step[i-2]
+    }
+    return step[n]
+};
+```
+#### 7.2 [22. 括号生成](https://leetcode-cn.com/problems/generate-parentheses/)
+```
+var generateParenthesis = function(n) {
+    let res = [];
+    const help = (cur,left,right)=>{
+        if (cur.length === 2*n) {
+            res.push(cur)
+            return
+        }
+        if (left<n) {
+            help(cur+"(",left+1,right)
+        }
+        if (right<left) {
+            help(cur+')',left,right+1)
+        }
+      
+    }
+    help('',0,0)
+    return res
+};
+```
+#### 7.3 [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/description/)
+```
+var invertTree = function(root) {
+    if (root==null) {
+        return root
+    }
+    [root.left,root.right] = [invertTree
+    (root.right),invertTree(root.left)]
+    return root
+};
+```
+#### 7.4 [98. 验证二叉搜索树](https://leetcode-cn.com/problems/validate-binary-search-tree/)
+```
+var isValidBST = function(root) {
+    let sortArr = preorderTraversal(root)
+    for (let i = 0; i < sortArr.length-1; i++) {
+       if (sortArr[i+1]<=sortArr[i]) {
+           return false
+       } 
+    }
+    return true
+};
+var preorderTraversal = function(root,arr=[]){
+    if (root == null) {
+        return arr
+    }
+    preorderTraversal(root.left,arr)
+    arr.push(root.val)
+    preorderTraversal(root.right,arr)
+    return arr
+}
+```
+#### 7.5 [104. 二叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
+```
+var maxDepth = function(root) {
+    if (!root) return 0
+    return Math.max(maxDepth(root.left),maxDepth(root.right))+1
+};
+```
+#### 7.6 [111. 二叉树的最小深度](https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/)
+```
+var minDepth = function(root) {
+   if (root == null) {
+       return 0
+   }
+   if(root.left == null && root.right == null){
+       return 1
+   }
+   let ans = Number.MAX_SAFE_INTEGER;
+   if (root.left != null) {
+       ans = Math.min(minDepth(root.left),ans)
+   }
+   if (root.right != null) {
+       ans = Math.min(minDepth(root.right),ans)
+   }
+   return ans+=1
+};
+```
+#### 7.7 [297. 二叉树的序列化与反序列化](https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/)
+```
+var serialize = function(root) {
+    if(!root) return '[]'
+    let res = '';
+    let node = root;
+    const queue = [node];
+    while(queue.length){
+        const front = queue.shift();
+        if (front) {
+            res+=`${front.val},`
+            queue.push(front.left)
+            queue.push(front.right)
+        }else{
+            res+='#,'
+        }
+    }
+    res = res.substring(0,res.length-1)
+    return `[${res}]`
+};
+
+var deserialize = function(data) {
+    if(data.length<=2) return null;
+    const nodes = data.substring(1,data.length-1).split(',');
+    const root = new TreeNode(parseInt(nodes[0]))
+    nodes.shift();
+    const queue = [root]
+    while (queue.length) {
+        const node = queue.shift();
+        const leftVal = nodes.shift();
+        if(leftVal!='#'){
+            node.left = new TreeNode(leftVal)
+            queue.push(node.left)
+        }
+        const rightVal = nodes.shift();
+        if(rightVal!=='#'){
+            node.right = new TreeNode(rightVal)
+            queue.push(node.right)
+        }
+    }
+    return root;
+};
+```
+#### 7.8 [236. 二叉树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+```
+var lowestCommonAncestor = function(root, p, q) {
+   if(root == null||root === p||root === q) return root
+   let left = lowestCommonAncestor(root.left,p,q)
+   let right = lowestCommonAncestor(root.right,p,q)
+   return left === null?right:right===null?left:root
+};
+```
+#### 7.9 [105. 从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+```
+var buildTree = function(preorder, inorder) {
+    if(!inorder.length) return null;
+    let tmp = preorder[0],mid = inorder.indexOf(tmp);
+    let root = new TreeNode(tmp)
+    root.left = buildTree(preorder.slice(1,mid+1),inorder.slice(0,mid))
+    root.right = buildTree(preorder.slice(mid+1),inorder.slice(mid+1))
+    return root
+};
+```
+#### 7.10 [77. 组合](https://leetcode-cn.com/problems/combinations/)
+```
+var combine = function(n, k) {
+    let res = [];
+    let subres = [];
+    function combineSub(start,subres) {
+        if(subres.length==k){
+            res.push(subres.slice(0))
+            return
+        }
+        var len = subres.length;
+        for (let i = start; i <= n-(k-len)+1; i++) {
+            subres.push(i)
+            combineSub(i+1,subres)
+            subres.pop()
+        }
+    }
+    combineSub(1,subres)
+    return res
+};
+
+```
+#### 7.11 [46. 全排列](https://leetcode-cn.com/problems/permutations/)
+```
+var permute = function (nums) {
+    let list = [];
+    backtrack(list,[],nums)
+    return list;
+};
+function backtrack(list,temp,nums){
+    if(temp.length == nums.length) return list.push([...temp])
+    for (let i = 0; i < nums.length; i++) {
+        if(temp.includes(nums[i])) continue;
+        temp.push(nums[i])
+        backtrack(list,temp,nums)
+        temp.pop()
+    }
+}
+```
+#### 7.12 [47. 全排列 II](https://leetcode-cn.com/problems/permutations-ii/)
+```
+var permuteUnique = function(nums) {
+    if(nums===null) return;
+    nums.sort((a,b)=>a-b)
+    const res = [];
+    cal(nums,0,res)
+    return res
+};
+
+const swap = (nums,i,j)=> {
+    if(i===j) return
+    const t = nums[i]
+    nums[i] = nums[j]
+    nums[j] = t
+}
+const cal = (nums,first,result)=>{
+    if(nums.length === first){
+        result.push([...nums])
+        return;
+    }
+    const map = new Map();
+    for (let i = first; i < nums.length; i++) {
+        if(!map.get(nums[i])){
+            map.set(nums[i],true)
+            swap(nums,first,i)
+            cal(nums,first+1,result)
+            swap(nums,first,i)
+        }
+    }
+}
+```
 
 ## 8、分治、回溯
+#### 8.1 [50. Pow(x, n)](https://leetcode-cn.com/problems/powx-n/)
+```
+var myPow = function(x, n) {
+    if(n<0) return 1/myPow(x,-n)
+    if(n===0) return 1;
+    if(n%2===0) return myPow(x*x,Math.floor(n/2))
+    return myPow(x*x,Math.floor(n/2))*x
+};
+```
+#### 8.2 [78.子集](https://leetcode-cn.com/problems/subsets/)
+```
+var subsets = function(nums) {
+    let n = nums.length;
+    let tmpPath = [];
+    let res = [];
+    let backtrack = (tmpPath,start)=>{
+        res.push(tmpPath)
+        for (let i = start; i < n; i++) {
+            tmpPath.push(nums[i])
+            backtrack(tmpPath.slice(),i+1)
+            tmpPath.pop()
+        }
+    }
+    backtrack(tmpPath,0)
+    return res;
+};
+```
+#### 8.3 [169. 多数元素](https://leetcode-cn.com/problems/majority-element/description/)
+```
+var majorityElement = function(nums) {
+    nums.sort((a,b)=>a-b)
+    return nums[Math.floor(nums.length/2)]
+};
+```
+```
+// 投票算法
+var majorityElement = function(nums) {
+    let count = 1;
+    let majority = nums[0];
+    for (let i = 1; i < nums.length; i++) {
+        if(count === 0){
+            majority = nums[i]
+        }
+        if(nums[i] === majority){
+            count++
+        }else{
+            count--
+        }
+    }
+    return majority
+};
+```
+#### 8.4 [17. 电话号码的字母组合](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/)
+```
+var letterCombinations = function(digits) {
+    let result = [];
+    if(digits.length == 0) return [];
+    let numMap = {
+        2:'abc',
+        3:'def',
+        4:'ghi',
+        5:'jkl',
+        6:'mno',
+        7:'pqrs',
+        8:'tuv',
+        9:'wxyz'
+    }
+    for (const code of digits) {
+        let word = numMap[code]
+        if (result.length>0) {
+            let tmp = [];
+            for (const char of word) {
+                for (const old of result) {
+                    tmp.push(old+char)
+                }
+            }
+            result = tmp
+        }else{
+            result.push(...word)
+        }
+    }
+    return result
+};
+```
+
+#### 8.5 [51. N皇后](https://leetcode-cn.com/problems/n-queens/)
+```
+var solveNQueens = function(n) {
+    // 行不能一样 按行查找
+    // 列不能一样
+    // 行-列不能一样 
+    // 行+列不能一样
+    // tmp 为了记录之前的路径 tmp的索引是行数据 值是列数据 摆放的是棋子
+    let ret = [];
+    find(0)
+    return ret;
+
+    function find(row,tmp=[]) {
+        if (row === n) {
+            ret.push(tmp.map(c=>{
+                let arr = new Array(n).fill('.')
+                arr[c] = 'Q'
+                return arr.join('')
+            }))
+        }
+        for (let col = 0; col < n; col++) {
+           let canSet = tmp.some((ci,ri)=>{
+               return ci===col||(ri-ci)===(row-col)||(ri+ci)===(row+col)
+           })
+            if (canSet) continue;
+            find(row+1,[...tmp,col])
+        }
+    }
+
+};
+```
+
 ## 9、深度优先、广度优先
+#### 9.1  [102. 二叉树的层序遍历](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/)
+```
+var levelOrder = function (root){
+    if(root===null) return [];
+    let res = [];
+    let queue = [root];
+    let level = 0;
+    while(queue.length){
+       
+        let num = queue.length;
+        res[level]= [];
+        while(num--){
+                 let cur = queue.shift();
+                 res[level].push(cur.val)
+                 if(cur.left) queue.push(cur.left)
+                 if(cur.right) queue.push(cur.right)
+        }
+        level++
+    }
+    return res;
+}
+```
+#### 9.2  [433. 最小基因变化](https://leetcode-cn.com/problems/minimum-genetic-mutation/#/description)
+```
+var minMutation = function(start, end, bank) {
+    let bankSet = new Set(bank);
+    if(!bankSet.has(end)) return -1;
+    let queue = [[start,0]]
+    let dna = ['A','C','G','T'];
+    while(queue.length){
+        let [node,count] = queue.shift();
+        if(node === end) return count;
+        for (let i = 0; i < node.length; i++) {
+            for (let j = 0; j < dna.length; j++) {
+               let d = node.slice(0,i) + dna[j] + node.slice(i+1)
+               if (bankSet.has(d)) {
+                   queue.push([d,count+1])
+                   bankSet.delete(d)
+               }
+            }
+        }
+    }
+    return -1;
+};
+```
+#### 9.3  [22. 括号生成](https://leetcode-cn.com/problems/generate-parentheses/)
+```
+var generateParenthesis = function (n) {
+    let res = [];
+    const help = (cur,left,right)=>{
+        if (cur.length === 2*n) {
+            res.push(cur)
+            return
+        }
+        if(left <n){
+            help(cur+'(',left+1,right)
+        }
+        if (right<left) {
+            help(cur+')',left,right+1)
+        }
+    }
+    help('',0,0)
+    return res;
+};
+```
+#### 9.4  [515 在每个树行中找最大值](https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/)
+```
+var largestValues = function(root) {
+    if(root === null) return []
+    let res = [];
+    let level = 0;
+    let queue = [root]
+    let result = [];
+    while(queue.length){
+        res[level] = [];
+        let num = queue.length;
+        while (num--) {
+            let cur = queue.shift();
+            res[level].push(cur.val);
+            if(cur.left) queue.push(cur.left)
+            if(cur.right) queue.push(cur.right)
+        }
+        result.push(Math.max(...res[level]))
+        level++
+    }
+    return result
+};
+```
+#### 9.5  [127. 单词接龙](https://leetcode-cn.com/problems/word-ladder/description/)
+```
+var ladderLength = function(beginWord, endWord, wordList) {
+    let wordSet = new Set(wordList);
+    if(!wordSet.has(endWord)) return 0;
+    let queue = [[beginWord,1]]
+    while(queue.length){
+        let [word,transNumber] = queue.pop();
+        if(word === endWord) return transNumber;
+        for (const str of wordSet) {
+            if(charDiff(word,str)===1){
+                queue.unshift([str,transNumber+1])
+                wordSet.delete(str)
+            }
+        }
+    }
+    return 0;
+};
+
+const charDiff = (str1,str2)=>{
+    let changes = 0;
+    for (let i = 0; i < str1.length; i++) {
+       if (str1[i]!=str2[i])  changes+=1
+    }
+    return changes;
+}
+```
+#### 9.6  [126. 单词接龙 II](https://leetcode-cn.com/problems/word-ladder-ii/description/)
+```
+var findLadders = function(beginWord, endWord, wordList) {
+    let wordSet = new Set(wordList);
+    if(!wordSet.has(endWord)) return [];
+    wordSet.delete(beginWord);
+    let beginSet = new Set([beginWord]);
+    let map = new Map();
+    let distance = 0;
+    let minDistance = 0;
+    while (beginSet.size) {
+        if (beginSet.has(endWord)) break;
+        let trySet = new Set();
+        for (const word of beginSet) {
+            let mapSet = new Set();
+            for (let i = 0; i < word.length; i++) {
+                for (let j = 0; j < 26; j++) {
+                   let tryWord = word.slice(0,i) + String.fromCharCode(97+j)+word.slice(i+1);
+                   if(!minDistance&&tryWord === endWord) minDistance = distance+1;
+                   if (wordSet.has(tryWord)) {
+                       trySet.add(tryWord)
+                       mapSet.add(tryWord)
+                   }
+                    
+                }
+                
+            }
+            map.set(word,mapSet)
+        }
+        distance++;
+        for (const w of trySet) {
+            wordSet.delete(w)
+        }
+        beginSet = trySet
+    }
+    let ans = [];
+    let path = [beginWord];
+    dfs(beginWord,endWord,ans,path,map,minDistance,0)
+    return ans
+};
+function dfs(beginWord,endWord,ans,path,map,minDistance,distance) {
+    if(distance>minDistance) return;
+    if(beginWord === endWord) ans.push(path.slice())
+    let words = map.get(beginWord);
+    if(words){
+        for (const word of words) {
+            path.push(word)
+            dfs(word,endWord,ans,path,map,minDistance,distance+1)
+            path.pop()
+        }
+    }
+}
+```
+#### 9.7  [200. 岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)
+```
+var numIslands = function (grid) {
+    let num = 0;
+    if (grid && grid.length) {
+        const maxI = grid.length - 1, maxJ = grid[0].length - 1;
+        function overturn(i, j) {
+            if (i < 0 || j < 0 || i > maxI || j > maxJ) return;
+            if (grid[i][j] === '1') {
+                grid[i][j] = '0';
+                overturn(i, j - 1)
+                overturn(i - 1, j)
+                overturn(i + 1, j)
+                overturn(i, j + 1)
+            }
+        }
+        for (let i = 0; i < grid.length; i++) {
+            for (let j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] === '1') {
+                    num++
+                    overturn(i, j)
+                }
+            }
+        }
+    }
+    return num
+};
+```
+#### 9.8  [529. 扫雷游戏](https://leetcode-cn.com/problems/minesweeper/)
+```
+var updateBoard = function (board, click) {
+    let x = click[0], y = click[1];
+    if (board[x][y] === 'M') {
+        board[x][y] = 'X'
+        return board
+    }
+    let dx = [-1, -1, -1, 1, 1, 1, 0, 0];
+    let dy = [-1, 1, 0, -1, 1, 0, -1, 1];
+    let getNumsBombs = (board, x, y) => {
+        let num = 0;
+        for (let i = 0; i < 8; i++) {
+            let newX = x + dx[i], newY = y + dy[i];
+            if (newX < 0 || newX >= board.length || newY < 0 || newY >= board[0].length) continue;
+            if (board[newX][newY] === 'M' || board[newX][newY] === 'X') num++
+        }
+        return num;
+    }
+    let dfs = (board, x, y) => {
+        if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || board[x][y] != 'E') return;
+        let num = getNumsBombs(board, x, y);
+        if (num === 0) {
+            board[x][y] = 'B'
+            for (let i = 0; i < 8; i++) {
+                let newX = x + dx[i], newY = y + dy[i];
+                dfs(board, newX, newY)
+
+            }
+        } else {
+            board[x][y] = num + ''
+        }
+    }
+    dfs(board, x, y)
+    return board;
+};
+```
+
 ## 10、贪心算法、二分查找
 
 
