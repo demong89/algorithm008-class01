@@ -1361,5 +1361,105 @@ var updateBoard = function (board, click) {
 
 ## 10、贪心算法、二分查找
 
+#### 10.1 [322 零钱兑换](https://leetcode-cn.com/problems/coin-change/description/)
+```
+var coinChange = function(coins, amount) {
+  if(amount===0) return 0;
+  let dp = new Array(amount+1).fill(Number.MAX_VALUE);
+  dp[0] = 0;
+  for (let i = 1; i < dp.length; i++) {
+      for (let j = 0; j < coins.length; j++) {
+          if(i-coins[j]>=0){
+              dp[i] = Math.min(dp[i],dp[i-coins[j]]+1)
+          }
+      }
+  }
+  return dp[dp.length-1] === Number.MAX_VALUE ? -1:dp[dp.length-1]
+};
+```
+#### 10.2 [860. 柠檬水找零](https://leetcode-cn.com/problems/lemonade-change/)
+```
+var lemonadeChange = function (bills) {
+   let five = 0;
+   let ten = 0;
+   for (let i = 0; i < bills.length; i++) {
+       if(bills[i]===5){
+           five++
+       }else if(bills[i]===10){
+           if(five<=0) return false
+           five--
+           ten++
+       }else{
+           if(five>0&&ten>0){
+               five--
+               ten--
+           }else if(five-3>=0){
+               five = five-3
+           }else{
+               return false
+           }
+       }
+   }
+   return true
+};
+```
+#### 10.3 [455 分发饼干](https://leetcode-cn.com/problems/assign-cookies/description/)
+```
+var findContentChildren = function(g, s) {
+  g = g.sort((a,b)=>a-b)
+  s = s.sort((a,b)=>a-b)
+  let gLen = g.length,sLen = s.length;
+  let i = j =0;
+  let maxNum = 0;
+  while (i<gLen&&j<sLen) {
+      if(s[j]>=g[i]){
+          i++
+          j++
+          maxNum++
+      }else{
+          j++
+      }
+  }
+  return maxNum
+};
+```
+#### 10.4 [122 买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/description/)
+```
+var maxProfit = function(prices) {
+    let max = 0;
+    const len =  prices.length;
+    for (let i = 1; i <len; i++) {
+       max += Math.max(prices[i]-prices[i-1],0)
+    }
+    return max
+};
+```
+#### 10.5 [45 跳跃游戏 II](ttps://leetcode-cn.com/problems/jump-game-ii/description/)
+```
+var jump = function(nums) {
+    const hash = {}
+    const toEnd = (from)=>{
+        if(hash[from]) return hash[from]
+        if(from === nums.length-1)return 0;
+        if(from + nums[from]>=nums.length-1) return 1;
+        let min = Infinity;
+        for (let i = nums[from]; i > 0; i--) {
+            min = Math.min(toEnd(from+i),min)
+            if (min===1) break
+        }
+        hash[from] = min +1;
+        return hash[from]
+    }
+    return toEnd(0)
+};
+```
+#### 10.6 [55. 跳跃游戏](https://leetcode-cn.com/problems/jump-game/)
+```
+
+```
+#### 10.7 [874. 模拟行走机器人](https://leetcode-cn.com/problems/walking-robot-simulation/)
+```
+```
+
 
 
