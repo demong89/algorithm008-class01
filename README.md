@@ -29,7 +29,7 @@
 #姓名:郭兴旺
 #班级:1班
 #小组:刷题狂魔组 + JS组
-#作业&总结链接:https://github.com/demong89/algorithm008-class01/tree/master/Week_04
+#作业&总结链接:https://github.com/demong89/algorithm008-class01/tree/master/Week_06
 
 
 

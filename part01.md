@@ -722,6 +722,24 @@ var buildTree = function(preorder, inorder) {
 
     ```
 #### 6.2 [前 K 个高频元素](https://leetcode-cn.com/problems/top-k-frequent-elements/)
+```
+var topKFrequent = function(nums, k) {
+    let map = new Map()
+    nums.forEach(item=>{
+        if (map.get(item)) {
+            map.set(item,map.get(item)+1)
+        }else{
+            map.set(item,1)
+        }
+    })
+    let arr = [...map.entries()].sort((a,b)=>b[1]-a[1])
+    let res = []
+    for (let i = 0; i < k; i++) {
+        res.push(arr[i][0])
+    }
+    return res;
+};
+```
 #### 6.3 [239. 滑动窗口最大值](https://leetcode-cn.com/problems/sliding-window-maximum/)
 #### 6.4 [面试题49. 丑数](https://leetcode-cn.com/problems/chou-shu-lcof/)
 ```
@@ -1359,7 +1377,7 @@ var updateBoard = function (board, click) {
 };
 ```
 
-## 10、贪心算法、二分查找
+## 10、贪心算法
 
 #### 10.1 [322 零钱兑换](https://leetcode-cn.com/problems/coin-change/description/)
 ```
@@ -1455,11 +1473,208 @@ var jump = function(nums) {
 ```
 #### 10.6 [55. 跳跃游戏](https://leetcode-cn.com/problems/jump-game/)
 ```
-
+var canJump = function (nums) {
+    let max = nums[0];
+    let len = nums.length
+    for (let i = 1; i < len; i++) {
+        if (max >= len) {
+            return true
+        } else if (max < i) {
+            return false
+        } else {
+            max = Math.max(max, i + nums[i])
+        }
+    }
+    return true
+};
 ```
 #### 10.7 [874. 模拟行走机器人](https://leetcode-cn.com/problems/walking-robot-simulation/)
 ```
+var robotSim = function(commands, obstacles) {
+    let obstacleMap = {};
+    obstacles.forEach(o=>{
+        if(o.length>0) obstacleMap[o[0]+','+o[1]] = true
+    })
+    let res = 0;
+    let dx = [0,1,0,-1];
+    let dy = [1,0,-1,0];
+    let [x,y,di] = [0,0,0];
+    commands.forEach((c,index)=>{
+        if(c===-1) di = (di+1)%4
+        if(c===-2) di = (di+3)%4
+        if(c>0) {
+            for (let z = 0; z < c; z++) {
+              if(!obstacleMap[(x+dx[di])+','+(y+dy[di])]){
+                  x+=dx[di];
+                  y+=dy[di];
+                  res = Math.max(res,x*x+y*y)
+              }
+                
+            }
+        }
+    })
+    return res;
+};
 ```
 
 
 
+
+## 11、二分查找
+#### 11.1 [69. x 的平方根](https://leetcode-cn.com/problems/sqrtx/)
+```
+// 投机取巧的方法
+//var mySqrt = function(x) {
+//    return parseInt(Math.sqrt(x))
+//};
+// 暴力破解
+// var mySqrt = function(x) {
+//     let sqrt = 0;
+//     while (!(sqrt*sqrt<=x&&((sqrt+1)*(sqrt+1)>x))) {
+//         sqrt++
+//     }
+//     return sqrt
+// };
+
+var mySqrt = function (x) {
+  if(x<0) return NaN;
+  if(x<2) return x;
+  let left = 1,right=x>>1;
+  while(left+1<right){
+      let mid = left + ((right-left)>>1)
+      if(mid === x/mid){
+          return mid
+      }else if(mid< x/mid){
+          left = mid
+      }else{
+          right = mid
+      }
+  }
+  return right>x/right?left:right;
+};
+
+```
+#### 11.2 [367. 有效的完全平方数](https://leetcode-cn.com/problems/valid-perfect-square/)
+```
+// 暴力破解
+// var isPerfectSquare = function(num) {
+//     if (num===1)  return true
+//     let mid = num>>1;
+//     for (let i = 0; i <=mid; i++) {
+//        if (i*i===num) {
+//            console.log(i);
+           
+//            return true
+//        }
+//     }
+//     return false
+// };
+// 二分法
+var isPerfectSquare = function(num) {
+    if (num === 1) return true;
+    let left = 0,right = num;
+    while(left<=right){
+        let mid = parseInt((left+right)/2);
+        if (mid*mid === num) {
+            return true
+        }else if(mid*mid < num){
+            left = mid+1
+        }else{
+            right = mid-1
+        }
+    }
+    return false
+}
+```
+#### 11.3 [33. 搜索旋转排序数组](https://leetcode-cn.com/problems/search-in-rotated-sorted-array/)
+```
+// 投机取巧的
+//var search = function(nums, target) {
+//    return nums.findIndex(item=>item===target)
+//};
+
+var search = function (nums, target) {
+    let start = 0, end = nums.length - 1;
+    while (start <= end) {
+        const mid = start + ((end - start) >> 1)
+        if (nums[mid] === target) return mid;
+        if (nums[mid] >= nums[start]) {
+            if (target >= nums[start] && target <= nums[mid]) {
+                end = mid - 1
+            } else {
+                start = mid + 1
+            }
+        } else {
+            if (target >= nums[mid] && target <= nums[end]) {
+                start = mid + 1
+            } else {
+                end = mid - 1
+            }
+        }
+    }
+    return -1;
+};
+```
+#### 11.4 [74. 搜索二维矩阵](https://leetcode-cn.com/problems/search-a-2d-matrix/)
+```
+// 暴力
+// for (let i = 0; i < matrix.length; i++) {
+//     for (let j = 0; j < matrix[i].length; j++) {
+//         if (matrix[i][j]===target) {
+//             return true
+//         }
+//     }
+// }
+// return false
+
+// var searchMatrix = function(matrix, target) {
+//     if(!matrix.length) return false;
+//     let i =0;
+//     for (;i< matrix.length;i++) {
+//        if(matrix[i][0]>target) break
+//     }
+//     if(i===0) return false
+//     return matrix[i-1].indexOf(target)!=-1
+// };
+
+// 二分法
+var searchMatrix = function(matrix, target){
+    let m = matrix.length;
+    if(m==0) return false;
+    let n = matrix[0].length,low = 0,high = m*n -1;
+    while(low<=high){
+        let mid = (low+high)>>1;
+        let row = parseInt(mid/n),col = mid%n;
+        let matrixMid = matrix[row][col];
+        if(matrixMid<target){
+            low = mid+1
+        }else if(matrixMid>target){
+            high = mid -1
+        }else if(matrixMid === target){
+            return true
+        }
+    }
+    return false
+}
+```
+#### 11.5 [153. 寻找旋转排序数组中的最小值](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/)
+
+```
+// 投机法
+//var findMin = function(nums) {
+//    return Math.min(...nums)
+//};
+// 二分法
+var findMin = function(nums) {
+    let low = 0,high = nums.length -1;
+    while(low<high){
+        let mid = (low+high)>>1
+        if (nums[mid]>nums[high]) {
+            low = mid+1
+        }else{
+            high = mid
+        }
+    }
+    return nums[low]
+};
+```
