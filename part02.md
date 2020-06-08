@@ -77,20 +77,20 @@ var maxProduct = function (nums) {
     return max
 };
 ```
-#### 1.6 [322. 零钱兑换](https://leetcode-cn.com/problems/coin-change/)
+#### 1.6 [518. 零钱兑换 II](https://leetcode-cn.com/problems/coin-change-2/)
 ```
-var coinChange = function(coins, amount) {
-    if(amount === 0) return 0;
-    let dp = new Array(amount+1).fill(Number.MAX_VALUE)
-    dp[0] = [0];
-    for (let i = 1; i < dp.length; i++) {
-        for (let j = 0; j < coins.length; j++) {
+var change = function(amount, coins) {
+    let dp = new Array(amount+1).fill(0)
+    if(amount === 0) return 1;
+    dp[0] = 1;
+    for (let j = 0; j < coins.length; j++) {
+       for (let i = 1; i < amount+1; i++) {
            if(i-coins[j]>=0){
-               dp[i] = Math.min(dp[i],dp[i-coins[j]]+1)
+               dp[i] = dp[i]+dp[i-coins[j]]
            }
-        }
+       }
     }
-    return dp[dp.length-1] === Number.MAX_VALUE?-1:dp[dp.length-1]
+    return dp[dp.length-1]
 };
 ```
 #### 1.7 [1143. 最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/)
@@ -275,29 +275,158 @@ var maxProfit = function(prices, fee) {
     return dp[prices.length-1][0]
 };
 ```
-#### 1.16 []()
+#### 1.16 [279. 完全平方数](https://leetcode-cn.com/problems/perfect-squares/)
 ```
+var numSquares = function(n) {
+    let dp = new Array(n+1).fill(0)
+    for (let i = 1; i <= n; i++) {
+       dp[i] = i;
+       for (let j = 1; j*j <= i; j++) {
+          dp[i] = Math.min(dp[i],dp[i-j*j]+1)
+       }
+    }
+    return dp[n]
+};
+```
+#### 1.17 [72. 编辑距离](https://leetcode-cn.com/problems/edit-distance/)
+```
+var minDistance = function(word1, word2) {
+    let n = word1.length;
+    let m = word2.length;
+    let dp = [];
+    for (let i = 0; i <=n; i++) {
+        dp.push([])
+        for (let j = 0; j <= m; j++) {
+          if(i*j){
+            dp[i][j] = word1[i-1]===word2[j-1]?dp[i-1][j-1]:(Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1])+1)
+          }else{
+              dp[i][j] = i+j
+          }
+            
+        }
+    }
+    return dp[n][m]
+};
+```
+#### 1.18 [62. 不同路径](https://leetcode-cn.com/problems/unique-paths/)
+```
+var uniquePaths = function(m, n) {
+    let dp = new Array(n).fill(1);
+    for (let i = 1; i <m; i++) {
+        for (let j = 1; j < n; j++) {
+           dp[j] = dp[j-1]+dp[j]
+        }
+    }
+    return dp[n-1]
+};
+```
+#### 1.19 [63. 不同路径 II](https://leetcode-cn.com/problems/unique-paths-ii/)
+```
+var uniquePathsWithObstacles = function(obstacleGrid) {
+    let n = obstacleGrid.length;
+    let m = obstacleGrid[0].length;
+    let res = new Array(m).fill(0);
+    res[0] = 1;
+    for (let i = 0; i < n; i++) {
+       for (let j = 0; j < m; j++) {
+          if(obstacleGrid[i][j]==1){
+              res[j] = 0;
+          }else if(j>0){
+              res[j] += res[j-1]
+          }
+       }
+    }
+    return res[m-1]
+};
+```
+#### 1.20 [980. 不同路径 III](https://leetcode-cn.com/problems/unique-paths-iii/)
+```
+var uniquePathsIII = function(grid) {
+    let init = {
+        grid:null,
+        start:[],
+        end:[],
+        path_num:0,
+        res:0
+    }
+    init_grid.call(init,grid);
+    get_paths(init)
+    return init.res
+};
 
-```
-#### 1.17 []()
-```
+function get_paths(obj){
+    if(move(obj,1,0)===1){
+        get_paths(obj);
+        trace_back(obj,1,0)
+    }
+    if(move(obj,0,-1)===1){
+        get_paths(obj);
+        trace_back(obj,0,-1)
+    }
+    if(move(obj,-1,0)===1){
+        get_paths(obj);
+        trace_back(obj,-1,0)
+    }
+    if(move(obj,0,1)===1){
+        get_paths(obj);
+        trace_back(obj,0,1)
+    }
+}
+function trace_back(obj,up,left){
+    obj.grid[obj.start[0]][obj.start[1]] = 0;
+    obj.start[0] += up;
+    obj.start[1] += left;
+    obj.path_num++;
+}
 
-```
-#### 1.18 []()
-```
+function move(obj,up,left){
+    if (obj.grid[obj.start[0]-up][obj.start[1]-left]===2&&obj.path_num===0) {
+        obj.res++;
+        return 2;
+    }else if(obj.grid[obj.start[0]-up][obj.start[1]-left] === 0){
+        obj.start[0] -= up;
+        obj.start[1] -= left;
+        obj.grid[obj.start[0]][obj.start[1]] = -1;
+        obj.path_num--
+        return 1
+    }else{
+        return -1
+    }
+}
 
+function init_grid(grid){
+    this.grid = new Array(grid.length+2);
+    for (let i = 0; i < this.grid.length; i++) {
+        this.grid[i] = new Array(grid[0].length+2).fill(-1)
+    }
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[0].length; j++) {
+            if(grid[i][j] === 1) this.start = [i+1,j+1];
+            if(grid[i][j]===2) this.end = [i+1,j+1];
+            if(grid[i][j]===0) this.path_num++
+            this.grid[i+1][j+1] = grid[i][j]
+        }
+    }
+}
 ```
-#### 1.19 []()
+#### 1.21 [32. 最长有效括号](https://leetcode-cn.com/problems/longest-valid-parentheses/)
 ```
-
-```
-#### 1.20 []()
-```
-
-```
-#### 1.21 []()
-```
-
+var longestValidParentheses = function(s) {
+    var max = 0,n = s.length;
+    const dp = new Array(n).fill(0);
+    for (let i = 1; i < n; i++) {
+       if(s[i] === ')'){
+           if(s[i-1] === '('){
+               dp[i] = (i>=2?dp[i-2]:0)+2
+           }else if(i-dp[i-1]>0&&s[i-dp[i-1]-1]=='('){
+               dp[i] = dp[i-1]+((i-dp[i-1]>=2)?dp[i-dp[i-1]-2]:0)+2
+           }
+           max = Math.max(max,dp[i])
+       }
+        
+    }
+    return max
+};
 ```
 #### 1.22 []()
 ```
