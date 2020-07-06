@@ -680,5 +680,44 @@ var findCircleNum = function(M) {
 #### 7.4 [493. 翻转对](https://leetcode-cn.com/problems/reverse-pairs/)
 
 ## 8、高级动态规划
+#### 8.1 [746. 使用最小花费爬楼梯](https://leetcode-cn.com/problems/min-cost-climbing-stairs/)
+#### 8.2 [300. 最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/)
+#### 8.3 [91. 解码方法](https://leetcode-cn.com/problems/decode-ways/)
+#### 8.4 [32. 最长有效括号](https://leetcode-cn.com/problems/longest-valid-parentheses/)
+#### 8.5 [85. 最大矩形](https://leetcode-cn.com/problems/maximal-rectangle/)
+#### 8.6 [115. 不同的子序列](https://leetcode-cn.com/problems/distinct-subsequences/)
+#### 8.7 [818. 赛车](https://leetcode-cn.com/problems/race-car/)
 
 ## 9、字符串算法
+* 基础算法
+#### 9.1 [709. 转换成小写字母](https://leetcode-cn.com/problems/to-lower-case/)
+#### 9.2 [58. 最后一个单词的长度](https://leetcode-cn.com/problems/length-of-last-word/)
+#### 9.3 [771. 宝石与石头](https://leetcode-cn.com/problems/jewels-and-stones/)
+#### 9.4 [387. 字符串中的第一个唯一字符](https://leetcode-cn.com/problems/first-unique-character-in-a-string/)
+#### 9.5 [8. 字符串转换整数 (atoi)](https://leetcode-cn.com/problems/string-to-integer-atoi/)
+
+* 字符串操作 
+#### 9.6 [14. 最长公共前缀](https://leetcode-cn.com/problems/longest-common-prefix/description/)
+#### 9.7 [344. 反转字符串](https://leetcode-cn.com/problems/reverse-string/)
+#### 9.8 [541. 反转字符串 II](https://leetcode-cn.com/problems/reverse-string-ii/)
+#### 9.9 [151. 翻转字符串里的单词](https://leetcode-cn.com/problems/reverse-words-in-a-string/)
+#### 9.10 [557. 反转字符串中的单词 III](https://leetcode-cn.com/problems/reverse-words-in-a-string-iii/)
+#### 9.11 [917. 仅仅反转字母](https://leetcode-cn.com/problems/reverse-only-letters/)
+
+* Anagram异位词问题 (242 )
+#### 9.12 [49. 字母异位词分组](https://leetcode-cn.com/problems/group-anagrams/)
+#### 9.13 [438. 找到字符串中所有字母异位词](https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/)
+* Palindrome回文串问题
+#### 9.14 [125. 验证回文串](https://leetcode-cn.com/problems/valid-palindrome/)
+#### 9.15 [680. 验证回文字符串 Ⅱ](https://leetcode-cn.com/problems/valid-palindrome-ii/)
+#### 9.16 [5. 最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)
+* 最长子串、子序列(1143,72)
+
+* 字符串+递归 or DP(115)
+#### 9.17 [10. 正则表达式匹配](https://leetcode-cn.com/problems/regular-expression-matching/)
+#### 9.18 [44. 通配符匹配](https://leetcode-cn.com/problems/wildcard-matching/)
+
+#### 9.12 [205. 同构字符串](https://leetcode-cn.com/problems/isomorphic-strings/)
+#### 9.12 []()
+#### 9.12 []()
+#### 9.12 []()
