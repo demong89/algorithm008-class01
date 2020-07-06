@@ -428,43 +428,195 @@ var longestValidParentheses = function(s) {
     return max
 };
 ```
-#### 1.22 []()
+#### 1.22 [64. 最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/)
+```
+/*
+ * @lc app=leetcode.cn id=64 lang=javascript
+ *
+ * [64] 最小路径和
+ *
+ * https://leetcode-cn.com/problems/minimum-path-sum/description/
+ *
+ * algorithms
+ * Medium (64.01%)
+ * Likes:    480
+ * Dislikes: 0
+ * Total Accepted:    89.6K
+ * Total Submissions: 136.6K
+ * Testcase Example:  '[[1,3,1],[1,5,1],[4,2,1]]'
+ *
+ * 给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
+ * 
+ * 说明：每次只能向下或者向右移动一步。
+ * 
+ * 示例:
+ * 
+ * 输入:
+ * [
+ * [1,3,1],
+ * ⁠ [1,5,1],
+ * ⁠ [4,2,1]
+ * ]
+ * 输出: 7
+ * 解释: 因为路径 1→3→1→1→1 的总和最小。
+ * 
+ * 
+ */
+
+// @lc code=start
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var minPathSum = function (grid) {
+    if (grid.length === 0) return 0;
+    const dp = [];
+    const rows = grid.length;
+    const cols = grid[0].length;
+    for (let i = 0; i < rows + 1; i++) {
+        dp[i] = [];
+        // 初始化第一列
+        dp[i][0] = Number.MAX_VALUE;
+        for (let j = 0; j < cols + 1; j++) {
+            // 初始化第一行
+            if (i === 0) {
+                dp[i][j] = Number.MAX_VALUE;
+            }
+        }
+    }
+    // tricky
+    dp[0][1] = 0;
+    for (let i = 1; i < rows + 1; i++) {
+        for (let j = 1; j < cols + 1; j++) {
+            // state transition
+            dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i - 1][j - 1];
+        }
+    }
+    return dp[rows][cols];
+};
+// @lc code=end
+
+
+```
+#### 1.23 [221. 最大正方形](https://leetcode-cn.com/problems/maximal-square/)
+```
+var maximalSquare = function(matrix) {
+    if(matrix.length === 0) return 0;
+    const dp = [];
+    const rows = matrix.length;
+    const cols = matrix[0].length;
+    let max = Number.MIN_VALUE;
+    for (let i = 0; i < rows+1; i++) {
+       if(i===0){
+           dp[i] = new Array(cols+1).fill(0)
+       }else{
+           dp[i] = [0]
+       }
+    }
+    for (let i = 1; i < rows+1; i++) {
+        for (let j = 1; j < cols+1; j++) {
+           if(matrix[i-1][j-1] === '1'){
+               dp[i][j] = Math.min(dp[i-1][j-1],dp[i-1][j],dp[i][j-1]) +1;
+               max = Math.max(max,dp[i][j])
+           }else{
+               dp[i][j] = 0;
+           }
+        }
+    }
+    return max*max
+};
+```
+#### 1.24 [363. 矩形区域不超过 K 的最大数值和](https://leetcode-cn.com/problems/max-sum-of-rectangle-no-larger-than-k/)
+```
+function maxSumSubmatrix (matrix, K) {
+    let max = -Infinity;
+    const m = matrix.length;
+    const n = matrix[0].length;
+
+    for (let i = 0; i < n; i++) {
+        const rowSum = Array(m).fill(0);
+
+        for (let j = i; j < n; j++) {
+            for (let k = 0; k < m; k++) {
+                rowSum[k] += matrix[k][j];
+            }
+
+            let sum = 0;
+            const arr = [0];
+
+            for (let r = 0; r < m; r++) {
+                sum += rowSum[r];
+
+                // js中的Set没有ceiling或者lowerbound方法，
+                // 所以实现一个方法查找应当插入值的位置
+                let idx = insertIndex(arr, sum - K);
+
+                idx = idx >= arr.length ? arr.length - 1 : idx;
+                const val = sum - arr[idx];
+
+                if (idx > -1 && val <= K) {
+                    if (val === K) return K;
+                    else max = Math.max(max, val);
+                }
+
+                const insertIdx = insertIndex(arr, sum);
+                if (arr[insertIdx] !== sum) {
+                    // 在合适的index位置插入该值，保证arr是个有序数组
+                    arr.splice(insertIdx, 0, sum);
+                }
+            }
+
+        }
+    }
+
+    return max;
+}
+
+function insertIndex(nums, target){
+    let low = 0;
+    let high = nums.length - 1;
+    let mid;
+
+    while (low <= high) {
+        mid = (low + high) >> 1;
+
+        if (nums[mid] === target) {
+            return mid;
+        } else if (nums[mid] > target) {
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+
+    return low;
+}
+```
+#### 1.25 [403. 青蛙过河](https://leetcode-cn.com/problems/frog-jump/)
 ```
 
 ```
-#### 1.23 []()
+#### 1.26 [410. 分割数组的最大值](https://leetcode-cn.com/problems/split-array-largest-sum/)
 ```
 
 ```
-#### 1.24 []()
+#### 1.27 [552. 学生出勤记录 II](https://leetcode-cn.com/problems/student-attendance-record-ii/)
 ```
 
 ```
-#### 1.25 []()
+#### 1.28 [621. 任务调度器](https://leetcode-cn.com/problems/task-scheduler/)
 ```
 
 ```
-#### 1.26 []()
+#### 1.29 [647. 回文子串](https://leetcode-cn.com/problems/palindromic-substrings/)
 ```
 
 ```
-#### 1.27 []()
+#### 1.30 [76. 最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/)
 ```
 
 ```
-#### 1.28 []()
-```
-
-```
-#### 1.29 []()
-```
-
-```
-#### 1.30 []()
-```
-
-```
-#### 1.31 []()
+#### 1.31 [312. 戳气球](https://leetcode-cn.com/problems/burst-balloons/)
 ```
 
 ```
