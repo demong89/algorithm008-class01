@@ -658,9 +658,27 @@ var findCircleNum = function(M) {
 ```
 
 ## 3、高级搜索
+
 ## 4、红黑树和AVL树
+
 ## 5、位运算
+#### 5.1 [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/)
+#### 5.2 [231. 2的幂](https://leetcode-cn.com/problems/power-of-two/)
+#### 5.3 [190. 颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/)
+#### 5.4 [51. N皇后](https://leetcode-cn.com/problems/n-queens/description/)
+#### 5.5 [52. N皇后 II](https://leetcode-cn.com/problems/n-queens-ii/description/)
+#### 5.6 [338. 比特位计数](https://leetcode-cn.com/problems/counting-bits/description/)--DP+位运算
+
 ## 6、布隆过滤器和LRU缓存
+
+#### 6.1 [146. LRU缓存机制](https://leetcode-cn.com/problems/lru-cache/#/)
+
 ## 7、排序算法
+#### 7.1 [1122. 数组的相对排序](https://leetcode-cn.com/problems/relative-sort-array/)
+#### 7.2 [242. 有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/)
+#### 7.3 [56. 合并区间](https://leetcode-cn.com/problems/merge-intervals/)
+#### 7.4 [493. 翻转对](https://leetcode-cn.com/problems/reverse-pairs/)
+
 ## 8、高级动态规划
+
 ## 9、字符串算法
