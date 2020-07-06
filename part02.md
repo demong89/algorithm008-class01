@@ -717,7 +717,4 @@ var findCircleNum = function(M) {
 #### 9.17 [10. 正则表达式匹配](https://leetcode-cn.com/problems/regular-expression-matching/)
 #### 9.18 [44. 通配符匹配](https://leetcode-cn.com/problems/wildcard-matching/)
 
-#### 9.12 [205. 同构字符串](https://leetcode-cn.com/problems/isomorphic-strings/)
-#### 9.12 []()
-#### 9.12 []()
-#### 9.12 []()
+#### 9.19 [205. 同构字符串](https://leetcode-cn.com/problems/isomorphic-strings/)
