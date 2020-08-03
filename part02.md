@@ -658,8 +658,20 @@ var findCircleNum = function(M) {
 ```
 
 ## 3、高级搜索
+#### 3.1 [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/)
+#### 3.2 [231. 2的幂](https://leetcode-cn.com/problems/power-of-two/)
+#### 3.3 [190. 颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/)
+#### 3.4 [51. N皇后](https://leetcode-cn.com/problems/n-queens/description/)
+#### 3.5 [52. N皇后 II](https://leetcode-cn.com/problems/n-queens-ii/description/)
+#### 3.6 [338. 比特位计数](https://leetcode-cn.com/problems/counting-bits/description/)--DP+位运算
 
 ## 4、红黑树和AVL树
+#### 5.1 [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/)
+#### 5.2 [231. 2的幂](https://leetcode-cn.com/problems/power-of-two/)
+#### 5.3 [190. 颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/)
+#### 5.4 [51. N皇后](https://leetcode-cn.com/problems/n-queens/description/)
+#### 5.5 [52. N皇后 II](https://leetcode-cn.com/problems/n-queens-ii/description/)
+#### 5.6 [338. 比特位计数](https://leetcode-cn.com/problems/counting-bits/description/)--DP+位运算
 
 ## 5、位运算
 #### 5.1 [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/)
