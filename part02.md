@@ -658,20 +658,22 @@ var findCircleNum = function(M) {
 ```
 
 ## 3、高级搜索
-#### 3.1 [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/)
-#### 3.2 [231. 2的幂](https://leetcode-cn.com/problems/power-of-two/)
-#### 3.3 [190. 颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/)
+#### 3.1 [22. 括号生成](https://leetcode-cn.com/problems/generate-parentheses/)
+#### 3.2 [36. 有效的数独](https://leetcode-cn.com/problems/valid-sudoku/description/)
+#### 3.3 [37. 解数独](https://leetcode-cn.com/problems/sudoku-solver/#/description)
 #### 3.4 [51. N皇后](https://leetcode-cn.com/problems/n-queens/description/)
-#### 3.5 [52. N皇后 II](https://leetcode-cn.com/problems/n-queens-ii/description/)
-#### 3.6 [338. 比特位计数](https://leetcode-cn.com/problems/counting-bits/description/)--DP+位运算
+#### 3.5 [127. 单词接龙](https://leetcode-cn.com/problems/word-ladder/description/)
+#### 3.6 [433. 最小基因变化](https://leetcode-cn.com/problems/minimum-genetic-mutation/#/description)
+#### 3.7 [1091. 二进制矩阵中的最短路径](https://leetcode-cn.com/problems/shortest-path-in-binary-matrix/)
+#### 3.8 [773. 滑动谜题](https://leetcode-cn.com/problems/sliding-puzzle/)
+
 
 ## 4、红黑树和AVL树
-#### 5.1 [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/)
-#### 5.2 [231. 2的幂](https://leetcode-cn.com/problems/power-of-two/)
-#### 5.3 [190. 颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/)
-#### 5.4 [51. N皇后](https://leetcode-cn.com/problems/n-queens/description/)
-#### 5.5 [52. N皇后 II](https://leetcode-cn.com/problems/n-queens-ii/description/)
-#### 5.6 [338. 比特位计数](https://leetcode-cn.com/problems/counting-bits/description/)--DP+位运算
+#### 4.1 [208. 实现 Trie (前缀树)](https://leetcode-cn.com/problems/implement-trie-prefix-tree/#/description)
+#### 4.2 [547. 朋友圈](https://leetcode-cn.com/problems/friend-circles/)
+#### 4.3 [200. 岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)
+#### 4.4 [130. 被围绕的区域](https://leetcode-cn.com/problems/surrounded-regions/)
+#### 4.5 [212. 单词搜索 II](https://leetcode-cn.com/problems/word-search-ii/)
 
 ## 5、位运算
 #### 5.1 [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/)
