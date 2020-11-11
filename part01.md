@@ -26,7 +26,7 @@ var maxArea = function (height) {
     return max
 };
 ```
-#### 1.2 [283. 移动零](https://leetcode-cn.com/problems/move-zeroes/)
+#### 1.2 [283. 移动零](https://leetcode-cn.com/problems/move-zeroes/)70
 
 题解：
 从后向前，查找是0，就把当前位置移动到最后。注意：这里不能从前面开始.
